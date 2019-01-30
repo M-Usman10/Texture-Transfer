@@ -16,8 +16,9 @@ def make_flask_app(config):
     file_handler = logging.FileHandler('server.log')
     app.logger.addHandler(file_handler)
     app.logger.setLevel(logging.INFO)
-    PROJECT_HOME = os.path.dirname(os.path.realpath(__file__))
-    UPLOAD_FOLDER = '{}/{}/'.format(PROJECT_HOME,config['input_dir'])
+#     PROJECT_HOME = os.path.dirname(os.path.realpath(__file__))
+#     UPLOAD_FOLDER = '{}/{}/'.format(PROJECT_HOME,config['input_dir'])
+    UPLOAD_FOLDER = config['input_dir']
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     return app
 
