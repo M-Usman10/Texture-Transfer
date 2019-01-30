@@ -33,8 +33,9 @@ def api_root():
                 config['inference_dir'], img_name))
         iuv = cv2.imread(os.path.join(config['output_dir'],img_name[:-4]+'_IUV.png'))
         out = map_t.transfer_texture(im,iuv)
-        io.imsave('Output_Data/1.jpg',out[...,::-1])
-        return send_from_directory('Output_Data','1.jpg', as_attachment=True)
+        result_save_file=os.path.join(app.config['UPLOAD_FOLDER'],"texture_result.jpg")
+        io.imsave(result_save_file,out[...,::-1])
+        return send_from_directory(app.config['UPLOAD_FOLDER'],'texture_result.jpg', as_attachment=True)
     else:
         return "Where is the image?"
 
