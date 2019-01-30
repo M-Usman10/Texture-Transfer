@@ -1,3 +1,8 @@
+import os
+import sys
+# print(os.path.dirname(os.path.realpath(__file__)))
+# sys.path.append(os.path.dirname(os.path.realpath(__file__)))
+# print (os.listdir(os.path.dirname(os.path.realpath(__file__))))
 from utils.map_texture import *
 from utils.tools import load_config
 from utils.tools import make_flask_app
@@ -6,7 +11,6 @@ from flask import url_for, send_from_directory, request
 from werkzeug import secure_filename
 import skimage.io as io
 import cv2
-import os
 
 
 config = load_config(r'configs.yaml')
@@ -37,4 +41,4 @@ def api_root():
         return "Where is the image?"
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port='9090', debug=False)
+    app.run(host='0.0.0.0',port=9090, debug=False)

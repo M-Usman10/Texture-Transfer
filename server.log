@@ -8,3 +8,60 @@ C:\Users\MuhammadUsman\PycharmProjects\Texture-Transfer\utils/uploads/
 saving C:\Users\MuhammadUsman\PycharmProjects\Texture-Transfer\utils/uploads/demo_im.jpg
 C:\Users\MuhammadUsman\PycharmProjects\Texture-Transfer\utils/uploads/
 saving C:\Users\MuhammadUsman\PycharmProjects\Texture-Transfer\utils/uploads/demo_im.jpg
+C:\Users\MuhammadUsman\PycharmProjects\Texture-Transfer\utils//home/arslanfarooq98/inference_dir/input_imgs/
+saving C:\Users\MuhammadUsman\PycharmProjects\Texture-Transfer\utils//home/arslanfarooq98/inference_dir/input_imgs/demo_im.jpg
+Exception on / [POST]
+Traceback (most recent call last):
+  File "C:\ProgramData\Anaconda2\envs\py3\lib\site-packages\flask\app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\ProgramData\Anaconda2\envs\py3\lib\site-packages\flask\app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\ProgramData\Anaconda2\envs\py3\lib\site-packages\flask\app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\ProgramData\Anaconda2\envs\py3\lib\site-packages\flask\_compat.py", line 33, in reraise
+    raise value
+  File "C:\ProgramData\Anaconda2\envs\py3\lib\site-packages\flask\app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\ProgramData\Anaconda2\envs\py3\lib\site-packages\flask\app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "main.py", line 36, in api_root
+    iuv = cv2.imread(os.path.join(config['output_dir'],img_name[:-4]+'_IUV.png'))
+KeyError: 'output_dir'
+C:\Users\MuhammadUsman\PycharmProjects\Texture-Transfer\utils//home/arslanfarooq98/inference_dir/input_imgs/
+saving C:\Users\MuhammadUsman\PycharmProjects\Texture-Transfer\utils//home/arslanfarooq98/inference_dir/input_imgs/demo_im.jpg
+Exception on / [POST]
+Traceback (most recent call last):
+  File "C:\ProgramData\Anaconda2\envs\py3\lib\site-packages\flask\app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\ProgramData\Anaconda2\envs\py3\lib\site-packages\flask\app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\ProgramData\Anaconda2\envs\py3\lib\site-packages\flask\app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\ProgramData\Anaconda2\envs\py3\lib\site-packages\flask\_compat.py", line 33, in reraise
+    raise value
+  File "C:\ProgramData\Anaconda2\envs\py3\lib\site-packages\flask\app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\ProgramData\Anaconda2\envs\py3\lib\site-packages\flask\app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "main.py", line 36, in api_root
+    iuv = cv2.imread(os.path.join(config['output_dir'],img_name[:-4]+'_IUV.png'))
+KeyError: 'output_dir'
+C:\Users\MuhammadUsman\PycharmProjects\Texture-Transfer\utils//home/arslanfarooq98/inference_dir/input_imgs/
+saving C:\Users\MuhammadUsman\PycharmProjects\Texture-Transfer\utils//home/arslanfarooq98/inference_dir/input_imgs/demo_im.jpg
+Exception on / [POST]
+Traceback (most recent call last):
+  File "C:\ProgramData\Anaconda2\envs\py3\lib\site-packages\flask\app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\ProgramData\Anaconda2\envs\py3\lib\site-packages\flask\app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\ProgramData\Anaconda2\envs\py3\lib\site-packages\flask\app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\ProgramData\Anaconda2\envs\py3\lib\site-packages\flask\_compat.py", line 33, in reraise
+    raise value
+  File "C:\ProgramData\Anaconda2\envs\py3\lib\site-packages\flask\app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\ProgramData\Anaconda2\envs\py3\lib\site-packages\flask\app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "main.py", line 36, in api_root
+    iuv = cv2.imread(os.path.join(config['output_dir'],img_name[:-4]+'_IUV.png'))
+KeyError: 'output_dir'
