@@ -34,7 +34,7 @@ def api_root():
         iuv = cv2.imread(os.path.join(config['output_dir'],img_name[:-4]+'_IUV.png'))
         out = map_t.transfer_texture(im,iuv)
         io.imsave('Output_Data/1.jpg',out[...,::-1])
-        return send_from_directory(app.config['UPLOAD_FOLDER'],img_name, as_attachment=True)
+        return send_from_directory('./Output_Data','1.jpg', as_attachment=True)
     else:
         return "Where is the image?"
 
