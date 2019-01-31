@@ -16,7 +16,6 @@ map_t = MapTexture(config)
 app = make_flask_app(config)
 @app.route('/', methods = ['POST'])
 def api_root():
-    print("heloo")
     if request.method == 'POST' and request.files['image']:
         app.logger.info(app.config['UPLOAD_FOLDER'])
         img = request.files['image']
