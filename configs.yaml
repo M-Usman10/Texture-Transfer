@@ -3,3 +3,4 @@ grid_pixels: 200
 input_dir:  /home/arslanfarooq98/inference_dir/input_imgs
 inference_dir: /home/arslanfarooq98/inference_dir
 output_dir: /home/arslanfarooq98/inference_dir/output_results
+send_from: Output_Data
