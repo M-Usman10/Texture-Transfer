@@ -1,8 +1,10 @@
-import numpy
 import skimage.io as io
 import matplotlib.pyplot as plt
 import numpy as np
 import cv2
+from skimage.measure import label
+
+
 class Texture:
     def __init__(self,config):
         self.mode='read_from_file'
@@ -29,9 +31,9 @@ class Texture:
             mask = ((255 - v_current_points) * 199. / 255.).astype(int), (
                     u_current_points * 199. / 255.).astype(int)
             tex_to_rep = tex[mask][..., ::-1]
-            print(tex_to_rep.max())
             generated_image[IUV[:, :, 0] == PartInd] = (tex_to_rep * 255).astype(np.uint8)
         return generated_image
+
     def parse_individuals(self,iuv,im,area_thresh=3500):
         i=iuv[...,0].copy()
         i[i>0]=1
@@ -57,15 +59,16 @@ class Texture:
             cropped_images.append(im[xmin:xmax,ymin:ymax])
             cropped_iuvs.append(iuv[xmin:xmax,ymin:ymax])
         return cropped_images,cropped_iuvs
-    def get_individual_texture(self,im,IUV):
-        TextureIm = np.zeros(self.TextureIm.shape)
+
+    def get_individual_texture(self,im,IUV,TextureIm):
         for PartInd in range(1, 25):  ## Set to xrange(1,23) to ignore the face part.
             u_current_points = IUV[..., 1][IUV[:, :, 0] == PartInd]  # Pixels that belong to this specific part.
             v_current_points = IUV[..., 2][IUV[:, :, 0] == PartInd]
             mask = ((255 - v_current_points) * 199. / 255.).astype(int), (
                     u_current_points * 199. / 255.).astype(int)
-            TextureIm[PartInd - 1, :, :, :][mask][..., ::-1]=im[IUV[:, :, 0] == PartInd]
+            TextureIm[PartInd - 1, mask[0], mask[1], ::-1]=im[IUV[:, :, 0] == PartInd]
         return TextureIm
+
     def save_texture(self,texture,name):
         texture_img=np.zeros((6*self.Grid_Pixels,4*self.Grid_Pixels,3))
         for i in range(4):
@@ -73,9 +76,16 @@ class Texture:
                     texture_img[(self.Grid_Pixels * j):(self.Grid_Pixels * j + self.Grid_Pixels),
                     (self.Grid_Pixels * i):(self.Grid_Pixels * i + self.Grid_Pixels), :]=\
                         texture[(6 * i + j), :, :, :]
-        io.imsave(name,texture_img)
-    def extract_textures(self,iuv,im,name):
+        io.imsave(name,texture_img.astype(np.uint8))
+
+    def extract_multiple_textures(self,iuv,im,name):
         individuals,iuvs=self.parse_individuals(iuv,im)
         for img_idx in range(len(individuals)):
-            texture=self.get_individual_texture(individuals[img_idx],iuvs[img_idx])
+            texture=self.get_individual_texture(individuals[img_idx],iuvs[img_idx],np.zeros(self.TextureIm.shape))
             self.save_texture(texture,(name+str(img_idx)+'.jpg'))
+
+    def extract_texture_from_video(self,img_frames,iuv_frames,name):
+        texture= np.zeros(self.TextureIm.shape)
+        for i in range(len(img_frames)):
+            self.get_individual_texture(img_frames[i],iuv_frames[i],texture)
+        self.save_texture(texture,name)
