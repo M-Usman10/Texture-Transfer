@@ -89,3 +89,8 @@ class Texture:
         for i in range(len(img_frames)):
             self.get_individual_texture(img_frames[i],iuv_frames[i],texture)
         self.save_texture(texture,name)
+    def transfer_texture_on_video(self,images,iuvs):
+        out = []
+        for i in range(len(images)):
+            out.append(self.transfer_texture(images[i], iuvs[i]))
+        return out

@@ -1,5 +1,6 @@
 import os
 import sys
+import glob
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 from utils.texture import *
 from utils.tools import *
@@ -12,7 +13,7 @@ map_t = Texture(config)
 app = make_flask_app(config)
 
 
-def process_video(saved_path,video_name):
+def process_video(saved_path,video_name,flag=0):
     os.system(
         "sudo nvidia-docker run --rm -v {}:/denseposedata -t densepose:c2-cuda9-cudnn7-wdata python2 tools/infer"
         "_simple.py --cfg configs/DensePose_ResNet101_FPN_s1x-e2e.yaml --output-dir DensePoseData/output_results/"
@@ -21,15 +22,14 @@ def process_video(saved_path,video_name):
     cap=Cap(saved_path,step_size=1)
     with cap as cap:
         images = cap.read_all()
-    cap = Cap(os.path.join(config['output_dir'], video_name[:-4] + '_IUV.mp4'), step_size=1)
-    with cap as cap:
-        iuvs = cap.read_all()
-    out=[]
-    for i in range(len(images)):
-        out.append(map_t.transfer_texture(images[i], iuvs[i]))
-    result_save_file = os.path.join(app.config['UPLOAD_FOLDER'], "texture_result.mp4")
-    save_video(out,result_save_file)
-
+    iuvs = [cv2.imread(file) for file in glob.glob('path/to/files/*_IUV.png')]
+    if flag==0:
+        result_save_file = os.path.join(app.config['UPLOAD_FOLDER'], "texture_result.mp4")
+        out=map_t.transfer_texture_on_video(images,iuvs)
+        save_video(out,result_save_file)
+    else:
+        result_save_file = os.path.join(app.config['UPLOAD_FOLDER'], "texture_result.jpg")
+        map_t.extract_texture_from_video(images,iuvs,result_save_file)
 
 @app.route('/', methods = ['POST'])
 def api_root():
