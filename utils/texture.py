@@ -3,7 +3,7 @@ import skimage.io as io
 import matplotlib.pyplot as plt
 import numpy as np
 import cv2
-class MapTexture:
+class Texture:
     def __init__(self,config):
         self.mode='read_from_file'
         self.texture_path=config['texture_img']
