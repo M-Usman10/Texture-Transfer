@@ -41,16 +41,26 @@ def process_video(saved_path,video_name,flag=0):
 
 @app.route('/', methods = ['POST'])
 def api_root():
-    if request.method == 'POST' and request.files['video']:
+    if request.method == 'POST' and request.files['extract']:
         app.logger.info(app.config['UPLOAD_FOLDER'])
-        video = request.files['video']
+        video = request.files['extract']
         video_name = secure_filename(video.filename)
         create_new_folder(app.config['UPLOAD_FOLDER'])
         saved_path = os.path.join(app.config['UPLOAD_FOLDER'], video_name)
         app.logger.info("saving {}".format(saved_path))
         video.save(saved_path)
-        process_video(saved_path,video_name)
-        return send_from_directory(app.config['UPLOAD_FOLDER'],'texture_result.mp4', as_attachment=True)
+        process_video(saved_path,video_name,flag=1)
+        return send_from_directory(app.config['UPLOAD_FOLDER'],'texture_result.jpg', as_attachment=True)
+    elif request.method == 'POST' and request.files['transfer']:
+        app.logger.info(app.config['UPLOAD_FOLDER'])
+        video = request.files['transfer']
+        video_name = secure_filename(video.filename)
+        create_new_folder(app.config['UPLOAD_FOLDER'])
+        saved_path = os.path.join(app.config['UPLOAD_FOLDER'], video_name)
+        app.logger.info("saving {}".format(saved_path))
+        video.save(saved_path)
+        process_video(saved_path, video_name)
+        return send_from_directory(app.config['UPLOAD_FOLDER'], 'texture_result.mp4', as_attachment=True)
     else:
         return "Where is the image?"
 
