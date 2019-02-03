@@ -14,11 +14,17 @@ app = make_flask_app(config)
 
 
 def process_video(saved_path,video_name,flag=0):
+    # os.system(
+    #     "sudo nvidia-docker run --rm -v {}:/denseposedata -t densepose:c2-cuda9-cudnn7-wdata python2 tools/infer"
+    #     "_simple.py --cfg configs/DensePose_ResNet101_FPN_s1x-e2e.yaml --output-dir DensePoseData/output_results/"
+    #     " --image-ext jpg --wts DensePoseData/weights/weights.pkl DensePoseData/input_imgs/{}".format(
+    #         config['inference_dir'], video_name))
     os.system(
-        "sudo nvidia-docker run --rm -v {}:/denseposedata -t densepose:c2-cuda9-cudnn7-wdata python2 tools/infer"
-        "_simple.py --cfg configs/DensePose_ResNet101_FPN_s1x-e2e.yaml --output-dir DensePoseData/output_results/"
+        "sudo nvidia-docker run --rm -v {}:/denseposedata -v {}:/denseposetools "
+        "-t densepose:c2-cuda9-cudnn7-wdata-movie python2 tools/infer"
+        "_video.py --cfg configs/DensePose_ResNet101_FPN_s1x-e2e.yaml --output-dir DensePoseData/output_results/"
         " --image-ext jpg --wts DensePoseData/weights/weights.pkl DensePoseData/input_imgs/{}".format(
-            config['inference_dir'], video_name))
+            config['inference_dir'],config['tool_dir'],video_name))
     cap=Cap(saved_path,step_size=1)
     with cap as cap:
         images = cap.read_all()
