@@ -6,6 +6,12 @@ import cv2
 
 def iuv_files_sort(name):
     return int(name[:-8])
+def read_images_sorted(path,key):
+    files=sorted(os.listdir(path),key=key)
+    images=[]
+    for i in files:
+        images.append(cv2.imread(os.path.join(path,i)))
+    return images
 
 class Cap:
    def __init__(self, path, step_size=1):
