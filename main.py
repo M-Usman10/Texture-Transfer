@@ -44,6 +44,7 @@ def process_video(saved_path,video_name,flag=0):
 
 @app.route('/retreive_texture', methods = ['POST'])
 def retreive_texture():
+    print ("request for texture retreival received")
     app.logger.info(app.config['UPLOAD_FOLDER'])
     video = request.files['extract']
     video_name = secure_filename(video.filename)
@@ -68,6 +69,9 @@ def transfer_texture():
     process_video(saved_path, video_name)
     return send_from_directory(app.config['UPLOAD_FOLDER'], 'texture_result.mp4', as_attachment=True)
 
+@app.route("/",methods=['POST','GET'])
+def index_fn():
+    return "hello world"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=9090, debug=False)
