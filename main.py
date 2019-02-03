@@ -21,15 +21,17 @@ def process_video(saved_path,video_name,flag=0):
         " --image-ext jpg --wts DensePoseData/weights/weights.pkl DensePoseData/input_imgs/{}".format(
             config['inference_dir'],config['tool_dir'],video_name))
     video_base_name=os.path.basename(video_name).split(".")[0]
-    IUV_save_path=os.path.join(config['output_dir'],video_base_name+'.avi')
-    cap = Cap(saved_path, step_size=1)
-    with cap as cap:
+    IUV_save_path=os.path.join(config['output_dir'],video_base_name)
+    IUV_save_path=os.path.join(IUV_save_path,"result_IUV.avi")
+
+    with Cap(saved_path,step_size=1) as cap:
         images = cap.read_all()
-    cap = Cap(IUV_save_path, step_size=1)
-    with cap as cap:
+
+    with Cap(IUV_save_path, step_size=1) as cap:
         iuvs=cap.read_all()
     # iuvs=read_images_sorted(IUV_save_path,key=iuv_files_sort)
-    print ("IUVS found {}".format(len(iuvs)))
+    assert len(iuvs)==len(images),"Number of frames of IUV video and sent video not equal"
+    # print ("IUVS found {}".format(len(iuvs)))
     if flag==0:
         result_save_file = os.path.join(app.config['UPLOAD_FOLDER'], "texture_result.mp4")
         out=map_t.transfer_texture_on_video(images,iuvs)
