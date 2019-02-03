@@ -27,7 +27,7 @@ def process_video(saved_path,video_name,flag=0):
 
     with cap as cap:
         images = cap.read_all()
-    iuvs = [cv2.imread(file) for file in glob.glob('{}/*_IUV.png'.format(IUV_save_path))]
+    iuvs = [cv2.imread(file) for file in sorted(glob.glob('{}/*_IUV.png'.format(IUV_save_path)),key=iuv_files_sort)]
     print ("IUVS found {}".format(len(iuvs)))
     if flag==0:
         result_save_file = os.path.join(app.config['UPLOAD_FOLDER'], "texture_result.mp4")
