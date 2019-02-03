@@ -55,9 +55,11 @@ def api_root():
         process_video(saved_path,video_name,flag=1)
         return send_from_directory(app.config['UPLOAD_FOLDER'],'texture_result.jpg', as_attachment=True)
     elif request.method == 'POST' and request.files['transfer']:
+        print ("request for texture transfer received")
         app.logger.info(app.config['UPLOAD_FOLDER'])
         video = request.files['transfer']
         video_name = secure_filename(video.filename)
+        print ("Video/image to process is {}".format(video_name))
         create_new_folder(app.config['UPLOAD_FOLDER'])
         saved_path = os.path.join(app.config['UPLOAD_FOLDER'], video_name)
         app.logger.info("saving {}".format(saved_path))
