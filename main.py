@@ -50,7 +50,7 @@ def api_root():
         app.logger.info("saving {}".format(saved_path))
         video.save(saved_path)
         process_video(saved_path,video_name)
-        return send_from_directory(config['send_from'],'texture_result.mp4', as_attachment=True)
+        return send_from_directory(config['UPLOAD_FOLDER'],'texture_result.mp4', as_attachment=True)
     else:
         return "Where is the image?"
 
