@@ -32,7 +32,9 @@ def process_video(saved_path,video_name,flag=0):
     if flag==0:
         result_save_file = os.path.join(app.config['UPLOAD_FOLDER'], "texture_result.mp4")
         out=map_t.transfer_texture_on_video(images,iuvs)
+        print ("saving video at {}".format(result_save_file))
         save_video(out,result_save_file)
+
     else:
         result_save_file = os.path.join(app.config['UPLOAD_FOLDER'], "texture_result.jpg")
         map_t.extract_texture_from_video(images,iuvs,result_save_file)
