@@ -14,11 +14,6 @@ app = make_flask_app(config)
 
 
 def process_video(saved_path,video_name,flag=0):
-    # os.system(
-    #     "sudo nvidia-docker run --rm -v {}:/denseposedata -t densepose:c2-cuda9-cudnn7-wdata python2 tools/infer"
-    #     "_simple.py --cfg configs/DensePose_ResNet101_FPN_s1x-e2e.yaml --output-dir DensePoseData/output_results/"
-    #     " --image-ext jpg --wts DensePoseData/weights/weights.pkl DensePoseData/input_imgs/{}".format(
-    #         config['inference_dir'], video_name))
     os.system(
         "sudo nvidia-docker run --rm -v {}:/denseposedata -v {}:/denseposetools "
         "-t densepose:c2-cuda9-cudnn7-wdata-movie python2 tools/infer"
@@ -26,9 +21,14 @@ def process_video(saved_path,video_name,flag=0):
         " --image-ext jpg --wts DensePoseData/weights/weights.pkl DensePoseData/input_imgs/{}".format(
             config['inference_dir'],config['tool_dir'],video_name))
     cap=Cap(saved_path,step_size=1)
+
+    IUV_save_path=os.path.basename(video_name).split(".")[0]
+    IUV_save_path=os.path.join(config['output_dir'],IUV_save_path)
+
     with cap as cap:
         images = cap.read_all()
-    iuvs = [cv2.imread(file) for file in glob.glob('path/to/files/*_IUV.png')]
+    iuvs = [cv2.imread(file) for file in glob.glob('{}/*_IUV.png'.format(IUV_save_path))]
+    print ("IUVS found {}".format(len(iuvs)))
     if flag==0:
         result_save_file = os.path.join(app.config['UPLOAD_FOLDER'], "texture_result.mp4")
         out=map_t.transfer_texture_on_video(images,iuvs)
