@@ -22,7 +22,7 @@ def process_video(saved_path,video_name,flag=0):
             config['inference_dir'],config['tool_dir'],video_name))
     video_base_name=os.path.basename(video_name).split(".")[0]
     IUV_save_path=os.path.join(config['output_dir'],video_base_name)
-    IUV_save_path=os.path.join(IUV_save_path,"result_IUV.pkl")
+    IUV_save_path=os.path.join(IUV_save_path,"result_IUV.npy")
 
     with Cap(saved_path,step_size=1) as cap:
         images = cap.read_all()
@@ -30,7 +30,7 @@ def process_video(saved_path,video_name,flag=0):
     # with Cap(IUV_save_path, step_size=1) as cap:
     #     iuvs=cap.read_all()
     # iuvs=read_images_sorted(IUV_save_path,key=iuv_files_sort)
-    iuvs=pickle.load(IUV_save_path)
+    iuvs=np.load(IUV_save_path)
 
     assert len(iuvs)==len(images),"Number of frames of IUV video and sent video not equal"
     # print ("IUVS found {}".format(len(iuvs)))
