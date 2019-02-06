@@ -1,5 +1,6 @@
 texture_img: Texture_Data/armughan_61.jpg
 grid_pixels: 200
+uv_dim: 199.0
 input_dir:  /home/arslanfarooq98/inference_dir/input_imgs
 inference_dir: /home/arslanfarooq98/inference_dir
 output_dir: /home/arslanfarooq98/inference_dir/output_results
