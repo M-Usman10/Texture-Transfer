@@ -28,8 +28,8 @@ class Texture:
             tex = TextureIm[PartInd - 1, :, :, :].squeeze()  # get texture for each part.
             u_current_points = IUV[..., 1][IUV[:, :, 0] == PartInd]  # Pixels that belong to this specific part.
             v_current_points = IUV[..., 2][IUV[:, :, 0] == PartInd]
-            mask = ((255 - v_current_points) * 199. / 255.).astype(int), (
-                    u_current_points * 199. / 255.).astype(int)
+            mask = ((255 - v_current_points) * self.config['uv_dim'] / 255.).astype(int), (
+                    u_current_points * self.config['uv_dim'] / 255.).astype(int)
             tex_to_rep = tex[mask][..., ::-1]
             generated_image[IUV[:, :, 0] == PartInd] = (tex_to_rep * 255).astype(np.uint8)
         return generated_image
@@ -64,8 +64,8 @@ class Texture:
         for PartInd in range(1, 25):  ## Set to xrange(1,23) to ignore the face part.
             u_current_points = IUV[..., 1][IUV[:, :, 0] == PartInd]  # Pixels that belong to this specific part.
             v_current_points = IUV[..., 2][IUV[:, :, 0] == PartInd]
-            mask = ((255 - v_current_points) * 199. / 255.).astype(int), (
-                    u_current_points * 199. / 255.).astype(int)
+            mask = ((255 - v_current_points) * self.config['uv_dim'] / 255.).astype(int), (
+                    u_current_points * self.config['uv_dim'] / 255.).astype(int)
             TextureIm[PartInd - 1, mask[0], mask[1], ::-1]=im[IUV[:, :, 0] == PartInd]
         return TextureIm
 
