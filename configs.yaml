@@ -1,4 +1,4 @@
-texture_img: Texture_Data/armughan_61.jpg
+texture_img: Texture_Data/fb.jpg
 grid_pixels: 200
 uv_dim: 199.0
 input_dir:  /home/arslanfarooq98/inference_dir/input_imgs

@@ -10,6 +10,7 @@ class Texture:
         self.mode='read_from_file'
         self.texture_path=config['texture_img']
         self.Grid_Pixels=config['grid_pixels']
+        self.config=config
         self.read_texture()
 
     def read_texture(self):
