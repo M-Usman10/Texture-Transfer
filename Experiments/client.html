@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Test Dense Server</title>
+    </head>
+    <body>
+		<h1>Transfer Textrue</h1>
+		
+        <form method="POST" action="http://34.80.59.95:9090/transfer_texture" enctype=multipart/form-data>
+            <p>Select File</p><br>
+			<input type="file" name="transfer"><br />
+            <input type="submit" value="submit"><br />
+        </form>
+		
+		<br/>
+		<h1>Construct Texture</h1>
+		<form method="POST" action="http://34.80.59.95:9090/retreive_texture"  enctype=multipart/form-data>
+            <p>Select File</p><br>
+			<input type="file" name="extract"><br />
+            <input type="submit" value="submit"><br />
+        </form>
+    </body>
+</html>

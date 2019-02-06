@@ -75,8 +75,9 @@ class Texture:
             for j in range(6):
                     texture_img[(self.Grid_Pixels * j):(self.Grid_Pixels * j + self.Grid_Pixels),
                     (self.Grid_Pixels * i):(self.Grid_Pixels * i + self.Grid_Pixels), :]=\
-                        texture[(6 * i + j), :, :, :]
+                        texture[(6 * i + j)]
         io.imsave(name,texture_img.astype(np.uint8))
+        return texture_img.astype(np.uint8)
 
     def extract_multiple_textures(self,iuv,im,name):
         individuals,iuvs=self.parse_individuals(iuv,im)
@@ -87,8 +88,11 @@ class Texture:
     def extract_texture_from_video(self,img_frames,iuv_frames,name):
         texture= np.zeros(self.TextureIm.shape)
         for i in range(len(img_frames)):
+            # prev=texture.copy()
             self.get_individual_texture(img_frames[i],iuv_frames[i],texture)
-        self.save_texture(texture,name)
+            # print(np.where(prev!=texture))
+        res=self.save_texture(texture,name)
+        return res
     def transfer_texture_on_video(self,images,iuvs):
         out = []
         for i in range(len(images)):
