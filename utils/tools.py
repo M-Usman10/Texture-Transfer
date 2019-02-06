@@ -25,7 +25,7 @@ class Cap:
        success, frame = self.cap.read()
        if not success:
            return success, frame
-       for _ in range(self.step_size):
+       for _ in range(self.step_size-1):
            s, f = self.cap.read()
            if not s:
                break
