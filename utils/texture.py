@@ -11,7 +11,7 @@ class Texture:
         self.texture_path=config['texture_img']
         self.Grid_Pixels=config['grid_pixels']
         self.read_texture()
-
+        self.config=config
     def read_texture(self):
         texture_img=cv2.imread(self.texture_path)[:,:,::-1]/255.
         self.TextureIm = np.zeros([24, 200, 200, 3])
@@ -67,8 +67,8 @@ class Texture:
             mask = ((255 - v_current_points) * self.config['uv_dim'] / 255.).astype(int), (
                     u_current_points * self.config['uv_dim'] / 255.).astype(int)
 
-            TextureMask= (TextureIm[PartInd - 1, mask[0], mask[1], ::-1])==0
-            TextureMask=np.sum(TextureMask,axis=-1,keepdims=True)
+            TextureMask= np.sum(TextureIm[PartInd - 1, mask[0], mask[1], ::-1],axis=-1)==0
+            TextureMask=TextureIm[...,np.newaxis]
             # TextureMask=np.expand_dims
             TextureIm[PartInd - 1, mask[0], mask[1], ::-1]+=im[IUV[:, :, 0] == PartInd]*TextureMask
         return TextureIm
