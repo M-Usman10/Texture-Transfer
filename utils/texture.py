@@ -14,7 +14,7 @@ class Texture:
         self.config=config
     def read_texture(self):
         texture_img=cv2.imread(self.texture_path)[:,:,::-1]/255.
-        self.TextureIm = np.zeros([24, 200, 200, 3])
+        self.TextureIm = np.zeros([24, self.Grid_Pixels, self.Grid_Pixels, 3])
         for i in range(4):
             for j in range(6):
                 self.TextureIm[(6 * i + j), :, :, :] = \
