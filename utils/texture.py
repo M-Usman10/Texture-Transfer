@@ -67,7 +67,9 @@ class Texture:
             v_current_points = IUV[..., 2][IUV[:, :, 0] == PartInd]
             mask = ((255 - v_current_points) * self.config['uv_dim'] / 255.).astype(int), (
                     u_current_points * self.config['uv_dim'] / 255.).astype(int)
-            TextureIm[PartInd - 1, mask[0], mask[1], ::-1]=im[IUV[:, :, 0] == PartInd]
+            texture_mask = np.sum(TextureIm[PartInd - 1, mask[0], mask[1], ::-1], axis=-1) == 0
+            texture_mask = texture_mask[..., np.newaxis]
+            TextureIm[PartInd - 1, mask[0], mask[1], ::-1]+=im[IUV[:, :, 0] == PartInd]*texture_mask
         return TextureIm
 
     def save_texture(self,texture,name):
