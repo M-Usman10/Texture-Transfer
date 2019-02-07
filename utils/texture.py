@@ -69,7 +69,7 @@ class Texture:
 
             texture_mask = np.sum(TextureIm[PartInd - 1, mask[0], mask[1], ::-1], axis=-1) == 0
             texture_mask = texture_mask[..., np.newaxis]
-            TextureIm[PartInd - 1, mask[0], mask[1], ::-1]=im[IUV[:, :, 0] == PartInd]*texture_mask
+            TextureIm[PartInd - 1, mask[0], mask[1], ::-1]+=im[IUV[:, :, 0] == PartInd]*texture_mask
         return TextureIm
 
     def save_texture(self,texture,name):
