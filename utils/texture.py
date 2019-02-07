@@ -68,6 +68,8 @@ class Texture:
                     u_current_points * self.config['uv_dim'] / 255.).astype(int)
 
             TextureMask= (TextureIm[PartInd - 1, mask[0], mask[1], ::-1])==0
+            TextureMask=np.sum(TextureMask,axis=-1,keepdims=True)
+            # TextureMask=np.expand_dims
             TextureIm[PartInd - 1, mask[0], mask[1], ::-1]+=im[IUV[:, :, 0] == PartInd]*TextureMask
         return TextureIm
 
