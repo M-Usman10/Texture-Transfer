@@ -18,13 +18,13 @@ def process_video(saved_path,video_name,flag=0):
         "sudo nvidia-docker run --rm -v {}:/denseposedata -v {}:/denseposetools "
         "-t densepose:c2-cuda9-cudnn7-wdata-movie python2 tools/infer"
         "_video.py --cfg configs/DensePose_ResNet101_FPN_s1x-e2e.yaml --output-dir DensePoseData/output_results/"
-        " --step-size 1 --image-ext jpg --wts DensePoseData/weights/weights.pkl DensePoseData/input_imgs/{}".format(
+        " --step-size 0 --image-ext jpg --wts DensePoseData/weights/weights.pkl DensePoseData/input_imgs/{}".format(
             config['inference_dir'],config['tool_dir'],video_name))
     video_base_name=os.path.basename(video_name).split(".")[0]
     IUV_save_path=os.path.join(config['output_dir'],video_base_name)
     IUV_save_path=os.path.join(IUV_save_path,"result_IUV.npy")
 
-    with Cap(saved_path,step_size=1) as cap:
+    with Cap(saved_path,step_size=0) as cap:
         images = cap.read_all()
 
     # with Cap(IUV_save_path, step_size=1) as cap:
