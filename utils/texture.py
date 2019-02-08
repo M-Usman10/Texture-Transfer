@@ -25,7 +25,7 @@ class Texture:
     def transfer_texture(self, im, IUV):
         TextureIm = self.TextureIm
         generated_image = im.copy()
-        for PartInd in range(1, 25):  ## Set to xrange(1,23) to ignore the face part.
+        for PartInd in range(1, 23):  ## Set to xrange(1,23) to ignore the face part.
             tex = TextureIm[PartInd - 1, :, :, :].squeeze()  # get texture for each part.
             u_current_points = IUV[..., 1][IUV[:, :, 0] == PartInd]  # Pixels that belong to this specific part.
             v_current_points = IUV[..., 2][IUV[:, :, 0] == PartInd]
@@ -76,9 +76,18 @@ class Texture:
         texture_img=np.zeros((6*self.Grid_Pixels,4*self.Grid_Pixels,3))
         for i in range(4):
             for j in range(6):
+                    current_texture=texture[(6 * i + j)]
+                    r_t=current_texture[...,0]
+                    g_t=current_texture[...,1]
+                    b_t=current_texture[...,2]
+                    mask=np.sum(current_texture,axis=-1)!=0
+                    mean_r=np.mean(r_t[mask])
+                    mean_g=np.mean(g_t[mask])
+                    mean_b=np.mean(b_t[mask])
+                    current_texture[~mask]=np.array([mean_r,mean_g,mean_b])
                     texture_img[(self.Grid_Pixels * j):(self.Grid_Pixels * j + self.Grid_Pixels),
                     (self.Grid_Pixels * i):(self.Grid_Pixels * i + self.Grid_Pixels), :]=\
-                        texture[(6 * i + j)]
+                        current_texture
         io.imsave(name,texture_img.astype(np.uint8))
         return texture_img.astype(np.uint8)
 
