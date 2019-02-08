@@ -1,5 +1,5 @@
 texture_img: Texture_Data/big.png
-grid_pixels: 200
+grid_pixels: 256
 uv_dim: 255.0
 input_dir:  /home/arslanfarooq98/inference_dir/input_imgs
 inference_dir: /home/arslanfarooq98/inference_dir
