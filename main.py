@@ -33,16 +33,24 @@ def process_video(saved_path,video_name,flag=0):
     iuvs=np.load(IUV_save_path)
 
     assert len(iuvs)==len(images),"Number of frames of IUV video and sent video not equal"
-    # print ("IUVS found {}".format(len(iuvs)))
+
     if flag==0:
-        result_save_file = os.path.join(app.config['UPLOAD_FOLDER'], "texture_result.mp4")
+        result_filename="texture_result.mp4" if len(images)>1 else "texture_result.jpg"
+        result_save_file = os.path.join(app.config['UPLOAD_FOLDER'],result_filename)
         out=map_t.transfer_texture_on_video(images,iuvs)
-        print ("saving video at {}".format(result_save_file))
-        save_video(out,result_save_file)
+        if len(images)>1:
+            print ("saving video at {}".format(result_save_file))
+            save_video(out,result_save_file)
+        else:
+            cv2.imwrite(result_save_file,out[0])
+        return result_filename
 
     else:
-        result_save_file = os.path.join(app.config['UPLOAD_FOLDER'], "texture_result.jpg")
+        result_filename="texture_result.jpg"
+        result_save_file = os.path.join(app.config['UPLOAD_FOLDER'], result_filename)
         map_t.extract_texture_from_video(images,iuvs,result_save_file)
+        return result_filename
+
 
 @app.route('/retreive_texture', methods = ['POST'])
 def retreive_texture():
@@ -54,8 +62,8 @@ def retreive_texture():
     saved_path = os.path.join(app.config['UPLOAD_FOLDER'], video_name)
     app.logger.info("saving {}".format(saved_path))
     video.save(saved_path)
-    process_video(saved_path, video_name, flag=1)
-    return send_from_directory(app.config['UPLOAD_FOLDER'], 'texture_result.jpg', as_attachment=True)
+    filename=process_video(saved_path, video_name, flag=1)
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
 
 @app.route('/transfer_texture', methods = ['POST'])
 def transfer_texture():
@@ -68,8 +76,8 @@ def transfer_texture():
     saved_path = os.path.join(app.config['UPLOAD_FOLDER'], video_name)
     app.logger.info("saving {}".format(saved_path))
     video.save(saved_path)
-    process_video(saved_path, video_name)
-    return send_from_directory(app.config['UPLOAD_FOLDER'], 'texture_result.mp4', as_attachment=True)
+    filename = process_video(saved_path, video_name)
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
 
 @app.route("/",methods=['POST','GET'])
 def index_fn():
