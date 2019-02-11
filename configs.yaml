@@ -1,6 +1,6 @@
-texture_img: Texture_Data/big.png
-grid_pixels: 256
-uv_dim: 255.0
+texture_img: Texture_Data/texture_from_SURREAL.png
+grid_pixels: 200
+uv_dim: 199.0
 input_dir:  /home/arslanfarooq98/inference_dir/input_imgs
 inference_dir: /home/arslanfarooq98/inference_dir
 output_dir: /home/arslanfarooq98/inference_dir/output_results
