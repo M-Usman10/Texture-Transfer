@@ -23,7 +23,7 @@ class Texture:
     def transfer_texture(self, im, IUV):
         TextureIm = self.TextureIm
         generated_image = im.copy()
-        for PartInd in range(1, 25):  ## Set to xrange(1,23) to ignore the face part.
+        for PartInd in range(1, 23):  ## Set to xrange(1,23) to ignore the face part.
             tex = TextureIm[PartInd - 1, :, :, :].squeeze()  # get texture for each part.
             u_current_points = IUV[..., 1][IUV[:, :, 0] == PartInd]  # Pixels that belong to this specific part.
             v_current_points = IUV[..., 2][IUV[:, :, 0] == PartInd]
@@ -60,7 +60,7 @@ class Texture:
         return cropped_images,cropped_iuvs
 
     def get_individual_texture(self,im,IUV,TextureIm):
-        for PartInd in range(1, 23):  ## Set to xrange(1,23) to ignore the face part.
+        for PartInd in range(1, 25):  ## Set to xrange(1,23) to ignore the face part.
             u_current_points = IUV[..., 1][IUV[:, :, 0] == PartInd]  # Pixels that belong to this specific part.
             v_current_points = IUV[..., 2][IUV[:, :, 0] == PartInd]
             mask = ((255 - v_current_points) * self.config['uv_dim'] / 255.).astype(int), (
