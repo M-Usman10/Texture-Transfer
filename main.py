@@ -1,12 +1,11 @@
 import os
 import sys
-import glob
+
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 from utils.texture import *
 from utils.tools import *
-from flask import url_for, send_from_directory, request
+from flask import send_from_directory, request
 from werkzeug import secure_filename
-import pickle
 
 config = load_config(r'configs.yaml')
 map_t = Texture(config)
@@ -56,13 +55,20 @@ def process_video(saved_path,video_name,flag=0):
 def retreive_texture():
     print ("request for texture retreival received")
     app.logger.info(app.config['UPLOAD_FOLDER'])
-    video = request.files['extract']
-    video_name = secure_filename(video.filename)
     create_new_folder(app.config['UPLOAD_FOLDER'])
-    saved_path = os.path.join(app.config['UPLOAD_FOLDER'], video_name)
-    app.logger.info("saving {}".format(saved_path))
-    video.save(saved_path)
-    filename=process_video(saved_path, video_name, flag=1)
+    img1 = request.files['img1']
+    img2 = request.files['img2']
+    img3 = request.files['img3']
+    img4 = request.files['img4']
+    video = [img1, img2, img3, img4]
+    name = request.form['texture_filename']
+    names = []
+    for i in video:
+        names.append(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(i.filename)))
+        app.logger.info("saving {}".format(names[-1]))
+        i.save(names[-1])
+    images_to_video(names, os.path.dirname(names[0]) + 'video.mp4')
+    filename = process_video(os.path.dirname(names[0]) + 'video.mp4', name, flag=1)
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
 
 @app.route('/transfer_texture', methods = ['POST'])
