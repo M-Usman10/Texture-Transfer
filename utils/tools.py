@@ -20,7 +20,7 @@ def read_images_sorted(path,key):
 
 def images_to_video(filenames, videopath):
     """filenames are the full paths of images"""
-    if len(filenames == 0):
+    if len(filenames) == 0:
         return
     images = []
     for i in filenames:
