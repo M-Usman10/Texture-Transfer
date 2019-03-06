@@ -12,7 +12,7 @@ map_t = Texture(config)
 app = make_flask_app(config)
 
 
-def process_video(saved_path,video_name,flag=0):
+def process_video(saved_path, video_name, result_filename='', flag=0):
     os.system(
         "sudo nvidia-docker run --rm -v {}:/denseposedata -v {}:/denseposetools "
         "-t densepose:c2-cuda9-cudnn7-wdata-movie python2 tools/infer"
@@ -45,7 +45,7 @@ def process_video(saved_path,video_name,flag=0):
         return result_filename
 
     else:
-        result_filename="texture_result.jpg"
+        result_filename = result_filename + '.jpg'
         result_save_file = os.path.join(app.config['UPLOAD_FOLDER'], result_filename)
         map_t.extract_texture_from_video(images,iuvs,result_save_file)
         return result_filename
@@ -68,8 +68,9 @@ def retreive_texture():
         app.logger.info("saving {}".format(names[-1]))
         i.save(names[-1])
     images_to_video(names, os.path.dirname(names[0]) + 'video.mp4')
-    filename = process_video(os.path.dirname(names[0]) + 'video.mp4', name, flag=1)
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
+    print(name, type(name))
+    filename = process_video(os.path.dirname(names[0]) + 'video.mp4', 'video.mp4', result_filename=name, flag=1)
+    return send_from_directory(app.config['UPLOAD_FOLDER'], name + '.jpg', as_attachment=True)
 
 @app.route('/transfer_texture', methods = ['POST'])
 def transfer_texture():
