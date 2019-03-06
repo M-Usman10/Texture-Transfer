@@ -77,7 +77,7 @@ def transfer_texture():
     print ("request for texture transfer received")
     app.logger.info(app.config['UPLOAD_FOLDER'])
     video = request.files['transfer']
-    name = request.files['texture_filename']
+    name = request.form['texture_filename']
     map_t.texture_path = os.path.join(app.config['UPLOAD_FOLDER'], name + '.jpg')
     map_t.read_texture()
     video_name = secure_filename(video.filename)
